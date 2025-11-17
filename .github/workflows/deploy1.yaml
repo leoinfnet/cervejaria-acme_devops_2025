@@ -27,3 +27,7 @@ jobs:
       - name: View Files
         run: |
           ls docker/
+      - name: Build Docker
+        run: |
+          cd docker
+          docker build . -t leogloriainfnet/cervejaria-devops-2025
