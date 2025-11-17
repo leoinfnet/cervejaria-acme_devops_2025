@@ -18,9 +18,17 @@ jobs:
         uses:  stCarolas/setup-maven@v5
         with:
           maven-version: '3.8.2'
+      - name: Bump Version
+        id: bump
+        run: |
+          set -e
+          mvn build-helper:parse-version versions:set  -DnewVersion=${parsedVersion.nextMajorVersion}.0.0
+          VER="$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout)"
+          echo "Nova Versao: $VER"
+          echo "version=$VER" >> GITHUB_OUTPUT
       - name: Build Project
         run: | 
-            mvn -B -DskipTests package
+            mvn -B -q -DskipTests package
       - name: Copy Artefato
         run: |
           cp target/*.jar docker/app.jar
@@ -30,4 +38,4 @@ jobs:
       - name: Build Docker
         run: |
           cd docker
-          docker build . -t leogloriainfnet/cervejaria-devops-2025
+          docker build . -t leogloriainfnet/cervejaria-devops-2025:${{steps.bump.version}}
