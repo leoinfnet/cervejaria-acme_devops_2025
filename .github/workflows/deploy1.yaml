@@ -1,8 +1,6 @@
 name: deploy1
-on:
-  push:
-    branches:
-      - master
+on: [pull_request]
+
 jobs:
   build-deploy:
     runs-on: self-hosted
