@@ -42,4 +42,6 @@ jobs:
       - name: Build Docker
         run: |
           cd docker
-          docker build . -t leogloriainfnet/cervejaria-devops-2025:${{steps.bump.outputs.version}}
+          VER=${{steps.bump.outputs.version}}
+          echo "Nova Versao: $VER"
+          docker build . -t leogloriainfnet/cervejaria-devops:${{steps.bump.outputs.version}}
