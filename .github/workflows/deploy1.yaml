@@ -42,4 +42,4 @@ jobs:
       - name: Build Docker
         run: |
           cd docker
-          docker build . -t leogloriainfnet/cervejaria-devops-2025:${{steps.bump.version}}
+          docker build . -t leogloriainfnet/cervejaria-devops-2025:${{steps.bump.outputs.version}}
