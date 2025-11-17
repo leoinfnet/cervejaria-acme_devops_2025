@@ -27,7 +27,7 @@ jobs:
           set -e
           
           mvn -B -q build-helper:parse-version versions:set \
-                -DnewVersion=\${parsedVersion.nextMajorVersion}.0.0 \
+                -DnewVersion=\${parsedVersion.nextMajorVersion}.${parsedVersion.nextMinorVersion}.0 \
                 -DprocessAllModules -DgenerateBackupPoms=false
           
           VER="$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout)"
@@ -73,6 +73,7 @@ jobs:
         id: version-type
         run: |
             echo "Verificando labels do PR..."
+            $${{github.actor}}
             LABELS=$(gh pr view ${{ github.event.pull_request.number }} --json labels -q ".labels[].name")
             VERSION_TYPE="patch"
             if echo "$LABELS" | grep -q 'version:major'; then VERSION_TYPE="major"; fi
