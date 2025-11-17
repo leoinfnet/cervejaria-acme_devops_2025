@@ -22,7 +22,11 @@ jobs:
         id: bump
         run: |
           set -e
-          mvn build-helper:parse-version versions:set  -DnewVersion=${parsedVersion.nextMajorVersion}.0.0
+          
+          mvn -B -q build-helper:parse-version versions:set \
+                -DnewVersion=\${parsedVersion.nextMajorVersion}.0.0 \
+                -DprocessAllModules -DgenerateBackupPoms=false
+          
           VER="$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout)"
           echo "Nova Versao: $VER"
           echo "version=$VER" >> GITHUB_OUTPUT
