@@ -21,6 +21,9 @@ jobs:
       - name: Build Project
         run: | 
             mvn -B -DskipTests package
+      - name: Copy Artefato
+        run: |
+          cp target/*.jar docker/app.jar
       - name: View Files
         run: |
-          ls target/
+          ls docker/
