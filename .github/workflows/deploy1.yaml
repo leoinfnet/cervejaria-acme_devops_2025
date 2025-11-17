@@ -1,0 +1,24 @@
+name: deploy1
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: 17
+          distribution: corretto
+      - name: Install Maven
+        uses:  stCarolas/setup-maven@v5
+        with:
+          maven-version: '3.8.2'
+      - name: check dependencias
+        run: | 
+          java -version
+          mvn 
