@@ -3,9 +3,12 @@ on:
   push:
     branches:
       - master
+      -
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,3 +53,7 @@ jobs:
         with:
           commit_message: "github bot ci: Bump para a versao ${{steps.bump.outputs.version}}"
           file_pattern: 'pom.xml'
+      - name: Docker TAG
+        run: |
+          docker tag leogloriainfnet/cervejaria-devops:${{steps.bump.outputs.version}} leogloriainfnet/cervejaria-devops:latest
+        
