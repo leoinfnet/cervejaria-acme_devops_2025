@@ -18,7 +18,9 @@ jobs:
         uses:  stCarolas/setup-maven@v5
         with:
           maven-version: '3.8.2'
-      - name: check dependencias
+      - name: Build Project
         run: | 
-          java -version
-          mvn 
+            mvn -B -DskipTests package
+      - name: View Files
+        run: |
+          ls target/
